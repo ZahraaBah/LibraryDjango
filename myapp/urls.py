@@ -1,16 +1,14 @@
-
-# back_end/myapp/urls.py
+# urls.py
 from django.urls import path
-from .views import home, BookListView, BookDetailView, BorrowCreateView, list_users, create_user, list_borrowed_books, borrow_book, return_book, create_book
+from .views import BookListView, BookDetailView, borrow_book, return_book, user_borrow_history, list_users, create_book,home
 
 urlpatterns = [
-    path('', home, name='home'),  # Home URL
-    path('users/', list_users, name='list-users'),
-    path('users/create/', create_user, name='create-user'),
+    path('', home, name='home'),  
     path('books/', BookListView.as_view(), name='book-list'),
     path('books/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
     path('books/create/', create_book, name='create-book'),
-    path('borrowed/', list_borrowed_books, name='list-borrowed-books'),
-    path('borrow/', BorrowCreateView.as_view(), name='borrow-create'),
+    path('borrow/', borrow_book, name='borrow-book'),
     path('return/', return_book, name='return-book'),
+    path('users/<int:user_id>/borrow-history/', user_borrow_history, name='user-borrow-history'),
+    path('users/', list_users, name='list-users'),
 ]
