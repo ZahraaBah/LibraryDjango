@@ -1,14 +1,29 @@
 # urls.py
 from django.urls import path
-from .views import BookListView, BookDetailView, borrow_book, return_book, user_borrow_history, list_users, create_book,home
+from .views import *
 
 urlpatterns = [
-    path('', home, name='home'),  
-    path('books/', BookListView.as_view(), name='book-list'),
-    path('books/<int:pk>/', BookDetailView.as_view(), name='book-detail'),
-    path('books/create/', create_book, name='create-book'),
-    path('borrow/', borrow_book, name='borrow-book'),
+
+    path('history/<int:id>', user_borrow_history, name='user-borrow-history'),
+    # ************** crud table  users **************
+    path('users', list_users, name='list-users'),
+    path('users-create', create_library_user, name='create_library_user'),
+    path('users-update', update_library_user, name='update_library_user'),
+    path('users-delete/<int:id>', delete_library_user, name='delete_library_user'),
+        # ************** crud table  books **************
+    path('book/', list_books, name='list_books'),
+    path('book-details', book_details, name='book_details'),
+    path('book-create', create_book, name='create-book'),
+    path('book-delete/<int:id>', delete_book, name='delete_book'),
+
+    # ************** crud table  borrow **************
+    path('borrow-create/', borrow_book, name='borrow-book'),
+    path('borrowing-list/', borrows, name='return-book'),
     path('return/', return_book, name='return-book'),
-    path('users/<int:user_id>/borrow-history/', user_borrow_history, name='user-borrow-history'),
-    path('users/', list_users, name='list-users'),
+
+
+    path('auth', auth, name='auth'),
+
+
+
 ]
