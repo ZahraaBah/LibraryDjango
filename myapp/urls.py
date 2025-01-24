@@ -14,6 +14,7 @@ urlpatterns = [
     path('book/', list_books, name='list_books'),
     path('book-details', book_details, name='book_details'),
     path('book-create', create_book, name='create-book'),
+    path('book-edit/<int:id>', edit_book, name='edit-book'),
     path('book-delete/<int:id>', delete_book, name='delete_book'),
 
     # ************** crud table  borrow **************
@@ -23,6 +24,7 @@ urlpatterns = [
 
 
     path('auth', auth, name='auth'),
+    path('register', register, name='register'),
 
 
 

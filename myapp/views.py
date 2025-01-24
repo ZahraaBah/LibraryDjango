@@ -74,6 +74,32 @@ def create_book(request):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['put'])
+def edit_book(request,id):
+    author=request.data.get("author" )
+    available_copies=request.data.get("available_copies" )
+    genre=request.data.get("genre" )
+    publication_year=request.data.get("publication_year" )
+    title=request.data.get("title" )
+    try:
+         book=Book.objects.get(id=id)
+         book.author=author
+         book.available_copies=available_copies
+         book.genre=genre
+         book.publication_year=publication_year
+         book.title=title
+         book.save()
+         return Response(book.title, status=status.HTTP_201_CREATED)
+    
+
+    except:
+
+
+        
+        return Response("book does not exist", status=status.HTTP_400_BAD_REQUEST)
+
+
 @api_view(['DELETE'])
 def delete_book(request, id):
     try:
@@ -135,14 +161,14 @@ def update_library_user(request ):
         username = request.data.get("username" )
         password = request.data.get("password")
         email = request.data.get("email")
-        status = request.data.get("status")
+        statuss = request.data.get("status")
         role = request.data.get("role")
 
         # Update username and password
         library_user.username = username
         library_user.email = email
         library_user.role = role
-        library_user.status = status
+        library_user.status = statuss
         if password:
             library_user.password=password
         library_user.save()
@@ -153,6 +179,16 @@ def update_library_user(request ):
         return Response({"error": "Library user not found."}, status=status.HTTP_404_NOT_FOUND)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def register(request):
+    serializer = UsersSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 
 
